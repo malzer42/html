@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+
+<head>
+  <meta charset="UTF-8">
+  <title>Career</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <!-- Link to external JS -->
+  <script type="text/javascript" src="js/header.js" defer></script>
+  <script type="text/javascript" src="js/footer.js" defer></script>
+  <script type="text/javascript" src="js/chat.js" defer></script>
+  <script type="text/javascript" src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
+</head>
+
+<body>
+
+  <div id="header"></div>
+
+  <main>
+
+    <h1><i>Join Rapix!</i></h1>
+
+    <section>
+
+      <div>
+
+        <h2>Apply for a Position</h2>
+
+      </div>
+
+      <div class="form-group"> <!-- Application form -->
+
+        <form action="job.php" method="POST" id="careerForm" enctype="multipart/form-data">
+
+          <table>
+            <tr>
+              <td>
+                <label for="position">Position: </label>
+              </td>
+              <td>
+                <select name="position" id="position" >
+                  <option value="account">Account</option>
+                  <option value="business">Business Analyst</option>
+                  <option value="dispatcher">Dispatcher</option>
+                  <option value="driver">Driver</option>
+                  <option value="developper">Software developper</option>
+                  <option value="cservice">Customer service</option>
+                  <option value="reception">Receptionist</option>
+                  <option>Other</option>
+                </select>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label for="first_name">First Name: </label>
+              </td>
+              <td>
+                <input type="text" name="first_name" placeholder="Your First Name" required>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label for="last_name">Last Name: </label>
+              </td>
+              <td>
+                <input type="text" name="last_name" placeholder="Your Last Name" required>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label for="phone">Phone: </label>
+              </td>
+              <td>
+                <input type="tel" name="phone_number" pattern="^\+?[0-9\s\-\(\)]{7,15}$" placeholder="+1 (123) 456-7890"
+                  required>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label for="email">Email: </label>
+              </td>
+              <td>
+                <input type="email" name="user_email" placeholder="Your Email" required>
+              </td>
+            </tr>
+
+            <!--tr>
+              <td>
+                <label for="gender">Gender: </label>
+              </td>
+              <td>
+                <input type="radio" value="Male" name="gender">Male
+                <input type="radio" value="Female" name="gender">Female
+              </td>
+            </tr -->
+
+            <tr>
+              <td>
+                <label for="country">Country: </label>
+              </td>
+              <td>
+                <select name="country" id="country">
+                  <option value="canada">Canada</option>
+                  <option value="usa">USA</option>
+                  <option value="rdc">Dem. Rep. Congo</option>
+                  <option value="sa">South Africa</option>
+                  <option value="other">Other</option>
+                </select>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label for="user_message">Message: </label>
+              </td>
+              <td>
+                <textarea name="user_message" placeholder="Your Message"  style="width: 400px; height: 50px; font-size: 16px;" ></textarea>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label for="cv">CV (pdf, doc, docx): </label>
+              </td>
+              <td>
+                <input type="file" name="cv" accept=\".pdf, .doc, .docx" style="width: 300px; height: 50px; font-size: 16px;"
+                  required />
+              </td>
+            </tr>
+
+            <td>
+              <td>
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAABT_sdEEEltXHkt4"></div><br>
+                <div>
+                  <button type="submit" value="Submit Application" style="width: 200px; height: 50px; font-size: 16px;">Submit</button>
+                  <input type="reset" value="Reset" style="width: 100px; height: 50px; font-size: 16px;">
+
+                </div>
+
+              </td>
+            </td>
+
+          </table>
+
+        </form>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <div id="footer"></div>
+
+</body>
+</html>

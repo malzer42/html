@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head> <!-- Begin of Head -->
+  <meta charset="UTF-8" />
+  <title>Home</title>
+
+  <!-------------------------Link to external CSS----------->
+  <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+  <!-- Link to external JS -->
+  <script type="text/javascript" src="js/header.js" defer></script>
+  <script type="text/javascript" src="js/footer.js" defer></script>
+  <script type="text/javascript" src="js/chat.js" defer></script>
+
+  <style>
+    .container {
+      flex-direction: row;
+      display: flex;
+      height: 100vh;
+      /* Full height of the viewport */
+    }
+
+    .left {
+      flex: 5;
+      /* 70% */
+      background-color: white;
+    }
+
+    .right {
+      flex: 5;
+      /* 70% */
+      background-color: white;
+    }
+
+    /* Responsive stacking for screens narrower than 768px */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left,
+      .right {
+        height: 50vh;
+        /* Half height each */
+      }
+    }
+  </style>
+
+
+
+</head> <!-- End of Head -->
+
+<body> <!-- Begin of Body -->
+
+  <div id="footer"></div>
+  <!-- <div class="overlay"></div> -->
+
+  <main> <!-- Beginning of Main -->
+
+    <h1><small>Welcome to Rapix!</small></h1>
+
+    <div class="container">
+      <div class="left">
+
+        <h4>Smart Collection & Delivery</h4>
+
+
+        <section> <!-- Begin section 1 -->
+
+          <blockquote><small>
+              We make it simple and easy for you. Whether you're at home, work, or on the go —
+              <br>our smart collection and delivery service brings convenience right to your doorstep.
+              <br>No more waiting in line
+              or driving through traffic.
+
+            </small></blockquote>
+
+        </section> <!-- End section 1 -->
+
+        <section> <!-- Beginning of section 2 -->
+
+          <h4>How It Works</h4>
+          <ol>
+            <li><small>Schedule a Pickup: Choose a time that works for you using our online booking form or a
+                quick call.</small></li>
+            <li><small>We Collect: Our team picks up your items from your location.</small></li>
+            <li><small>We Deliver: Your items are returned to you safely and on time.</small></li>
+          </ol>
+
+        </section> <!-- End of section 2 -->
+
+        <section> <!-- Beginning of section 3 -->
+
+          <h4>Why Choose Us?</h4>
+          <ul>
+            <li><small>Fast & reliable delivery team</small></li>
+            <li><small>Same-day or next-day options</small></li>
+            <li><small>Live tracking and SMS updates</small></li>
+            <li><small>Contactless pickup available</small></li>
+          </ul>
+
+        </section> <!-- End of section 3 -->
+
+        <section> <!-- Beginning of section 4 -->
+
+          <h4>Service Areas</h4>
+          <p><small>We currently serve Montreal, Laval, Terrebonne, and St-Eustache. More locations coming
+              soon!
+            </small></p>
+
+        </section> <!-- End of section 4 -->
+
+        <section> <!-- Beginning of section 5 -->
+
+          <h4>Need Help?</h4>
+          <p>Have questions about timing, pricing, or bulk orders?</p>
+          <p>Call us at <small>(438) 226-8155</small> or email <small><i>rapix@pamit.net</i></small>.</p>
+
+        </section> <!-- End of section 5 -->
+
+      </div>
+      <div class="right">
+
+        <h2><i></i></h2>
+
+        <div class="rounded-lg overflow-hidden shadow-lg">
+          <iframe src="https://www.google.com/maps?q=45.75376356276172,
+                                          -73.69801357411401&hl=es;z=14&output=embed" width="100%" height="640"
+            style="border:0;" allowfullscreen="" loading="lazy">
+
+          </iframe>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  </main> <!-- End of main -->
+
+  <div id="header"></div>
+
+</body>
+
+</html>

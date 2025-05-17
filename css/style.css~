@@ -1,0 +1,138 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+    background-color: #FFFFFF; 
+    color: #333;
+}
+
+
+.top{
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #c99c33;
+    font-weight: 700;
+    padding-top: 2px;
+    padding-left: 10px;
+    
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+    background-color: #333;
+    padding: 0.5rem 1rem;
+    color: white;
+    width: 100%;
+    background-color: #555;
+    overflow: auto;
+}
+
+.nav-links {
+      display: flex;
+      gap: 1rem;
+}
+
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.language-select {
+    margin-left: auto; /* Push to right */
+}
+
+select {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 0.25rem;
+}
+
+
+
+.navbar a {
+  float: left;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+  text-align: center;
+}
+
+.navbar a:hover {
+  background-color: #04AA6D;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+}
+
+
+
+
+
+h1 {
+    text-align: center;
+    color: #007BFF;
+}
+
+h2 {
+    text-align: left;
+    color: blue;
+}
+
+h3{
+    text-align: left;
+    color: blue;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li::before {
+    content: "✅ ";
+    color: green;
+}
+
+
+textarea{
+    width: 100%;
+    min-height: 150px;
+    resize: vertical; 
+}
+
+
+.form-group {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.form-group label {
+    width: 150px; /* same width for all labels */
+    margin-right: 10px;
+    text-align: right;
+}
+
+.form-group input {
+    width: 300px; /* same width for all inputs */
+    padding: 8px;
+    box-sizing: border-box;
+}
+  

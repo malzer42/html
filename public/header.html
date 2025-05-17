@@ -1,0 +1,41 @@
+<header>
+  
+  <script src="https://unpkg.com/i18next@21/i18next.min.js"></script>
+  <script src="https://unpkg.com/i18next-http-backend@1/i18nextHttpBackend.min.js"></script>
+  <script type="text/javascript" src="js/rapix.js"></script> 
+  <script type="text/javascript" src="js/translate.js"></script>
+           <div id="header" class=topTitle>
+             <marquee behavior="scroll"  direction="right" class="top" id="rapix">
+              <i> TopNet </i>
+             </marquee>
+           </div>
+
+  
+           <div id="nagigation" class="navbar">
+
+             <div id="navigationLinks" class="nav-links">
+               <a href="index.html"> <i class="fa fa-fw fa-home"> </i>
+               <i> Home </i></a> |
+               <a href="about.html"><i class="fa fa-fw fa-info"> </i>
+               <i>About</i> </a> |
+               <a href="team.html"> <i> Team </i> </a>|
+               <a href="career.html"><i class="fa fa-handshake-o"
+               aria-hidden="true"></i><i> Career</i> </a>|
+               <a href="contact.html"><i class="fa fa-handshake-o" aria-hidden="true"></i><i>Contact</i></a>
+             </div>
+      
+             <div id="navigationLanguage" class="language-select">
+               <select id="langSwitcher" name="language">
+                 <option value="en"><i>EN</i></option>
+                 <option value="fr"><i>FR</i></option>
+               </select>
+             </div>
+    
+           </div>
+
+           <!-- Translatable Content -->
+           <h1 data-i18n="title"></h1>
+  <p data-i18n="description"></p>
+  <!-- button data-i18n="button"></button -->
+  <hr>
+</header>
