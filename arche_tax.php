@@ -17,7 +17,7 @@ $sql = "SELECT m.id, m.first_name, m.last_name, m.email,
         FROM members m
         LEFT JOIN donations d ON m.id = d.member_id 
               AND d.donation_date BETWEEN ? AND ?
-        GROUP BY m.id";
+        GROUP BY m.id ORDER BY m.first_name" ;
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$start, $end]);
