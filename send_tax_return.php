@@ -21,10 +21,16 @@ require('fpdf186/fpdf.php');
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial','B',16);
-$pdf->Cell(40,10,"Tax Return for {$member['first_name']} {$member['last_name']}");
+$pdf->Cell(40,10,"Recu d'impots pour {$member['first_name']} {$member['last_name']}");
 $pdf->Ln(20);
 $pdf->SetFont('Arial','',14);
 $pdf->Cell(40,10,"Total Donations: $" . number_format((float)($donation['total'] ?? 0), 2));
+$pdf->Image('signature.png', 50, 200, 40); // (x, y, width)
+
+// Optional: Label for signature
+$pdf->SetXY(50, 185);
+$pdf->SetFont('Arial', '', 10);
+$pdf->Cell(40, 10, 'Jean Claude Mutombo', 0, 0, 'C');
 $pdf_path = "tax_returns/tax_{$member_id}.pdf";
 $pdf->Output('F', $pdf_path);
 
@@ -41,11 +47,13 @@ $mail->Port = 587;
 $mail->setFrom('pmulamba@gmail.com', ' Administration Arche de Dieu');
 $mail->addAddress($member['email']);
 $mail->Subject = 'Recu Retour Impots';
-$mail->Body = 'Please find your donation tax return attached.';
+$mail->Body = 'En piece jointe vous trouverez votre recu  Impots.';
 $mail->addAttachment($pdf_path);
 
 if ($mail->send()) {
-    echo "Tax return sent to " . htmlspecialchars($member['email']);
+    //echo "Tax return sent to " . htmlspecialchars($member['email']);
+    header("Location: arche_tax.php?success=1");
+    exit;
 } else {
     echo "Email failed: " . $mail->ErrorInfo;
 }

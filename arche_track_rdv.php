@@ -1,6 +1,7 @@
 <?php
-session_start();
+// session_start();
 require 'db_arche.php';
+require 'arche_rdv_admins_protect.php';
 
 /* if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'main_pastor') {
     header("Location: arche_login.php");

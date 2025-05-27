@@ -1,11 +1,12 @@
 <?php
 session_start();
 require 'db_arche.php';
+require 'arche_tax_admins_protect.php';
 
 /* if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'main_pastor') {
-    header("Location: arche_tax_login.php");
+    header("Location: arche_tax.php");
     exit;
-}  */
+} */
 
 // Default date range
 $start = $_GET['start_date'] ?? date('Y-01-01');
@@ -79,11 +80,11 @@ $members = $stmt->fetchAll();
     <br>
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Total Donations</th>
-            <th>Action</th>
+            <th><small>Prenom</small></th>
+            <th><small>Nom</small></th>
+            <th><small>Courriel</small></th>
+            <th><small>Total Donations</small></th>
+            <th><small>Action</small></th>
         </tr>
         <?php foreach ($members as $member): ?>
         <tr>
@@ -102,6 +103,13 @@ $members = $stmt->fetchAll();
         </tr>
         <?php endforeach; ?>
     </table><br>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === '1') {
+          alert("Message envoyé avec succes");
+        }
+      </script>
+
     <div id="arche_header"></div>
 
   <!--Start of Tawk.to Script-->

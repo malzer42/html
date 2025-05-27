@@ -83,12 +83,9 @@ $pastors = $stmtp->fetchAll();
 
   <main> <!-- Beginning of Main -->
 <br>
+<h4>Pasteurs de l'eglise Arche de Dieu</h4><br>
 
-
-
-<h4>Membres de l'eglise Arche de Dieu</h4><br>
-
-<a href="arche_add_member.php">➕ Ajout d'un Membre</a><br><br>
+<a href="arche_add_pastor.php" target="_blank">➕ Ajout d'un Pasteur</a><br><br>
 
 <table border="1" cellpadding="6" cellspacing="0">
     <tr>
@@ -99,20 +96,22 @@ $pastors = $stmtp->fetchAll();
         <th><small>Adresse</small></th>
         <th>Actions</th>
     </tr>
-    <?php foreach ($members as $m): ?>
+    <?php foreach ($pastors as $p): ?>
         <tr>
-            <td><?= htmlspecialchars($m['first_name']) ?></td>
-            <td><?= htmlspecialchars($m['last_name']) ?></td>
-            <td><?= $m['phone_number'] ?></td>
-            <td><?= $m['email'] ?></td>
-            <td><?= nl2br(htmlspecialchars($m['address'])) ?></td>
+            <td><?= htmlspecialchars($p['first_name']) ?></td>
+            <td><?= htmlspecialchars($p['last_name']) ?></td>
+            <td><?= $p['phone_number'] ?></td>
+            <td><?= $p['email'] ?></td>
+            <td><?= nl2br(htmlspecialchars($p['address'])) ?></td>
             <td>
-                <a href="arche_edit_member.php?id=<?= $m['id'] ?>">✏️ Modifier</a> |
-                <a href="?delete=<?= $m['id'] ?>" onclick="return confirm('Effacer ce membre?')">🗑️ Effacer</a>
+                <a href="arche_edit_pastor.php?id=<?= $p['id'] ?>">✏️ Modifier</a> |
+                <a href="?delete=<?= $p['id'] ?>" onclick="return confirm('Delete this pastor?')">🗑️ Effacer</a>
             </td>
         </tr>
     <?php endforeach; ?>
-</table><br>
+</table><br><br>
+
+
 
 </main> <!-- End of main -->
 

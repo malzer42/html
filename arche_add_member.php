@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head> <!-- Begin of Head -->
   <meta charset="UTF-8" />
-  <title>Pasteur</title>
+  <title>Ajout membre</title>
 
   <!-------------------------Link to external CSS----------->
   <link rel="stylesheet" href="css/style.css">
@@ -165,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <textarea name="address" id="address" rows="4" placeholder="8621 Boulevard Saint-Laurent
 
 Montréal, QC , CA H2P 2M9"
-                    style="width: 295px; height: 50px; font-size: 16px;" required></textarea>
+                    style="width: 295px; height: 50px; font-size: 10px;" required></textarea>
                 </td>
               </tr>
 

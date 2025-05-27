@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <td>
                   <textarea name="address" id="address" rows="4" placeholder="8621 Boulevard Saint-Laurent
 
-Montréal, QC , CA H2P 2M9" style="width: 295px; height: 50px; font-size: 16px;" required></textarea>
+Montréal, QC , CA H2P 2M9" style="width: 295px; height: 50px; font-size: 10px;" required></textarea>
                 </td>
               </tr>
 

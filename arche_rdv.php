@@ -1,6 +1,8 @@
 <?php
 require 'db_arche.php';
 
+
+
 $slots = $pdo->query("SELECT * FROM pastor_availability WHERE is_booked = 0 AND date >= CURDATE() ORDER BY date, time_slot")->fetchAll();
 // $arche_member = $pdo->query("SELECT * FROM members ORDER BY first_name")->fetchAll();
 

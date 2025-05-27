@@ -105,10 +105,10 @@ $resultJobApplications = $conn->query("SELECT * FROM applications ORDER BY submi
 
   <main> <!-- Beginning of Main -->
 
-    <h1>Gestion de l'eglise Arche de Dieu</h1>
 
     <div class="container">
       <div class="left">
+        <br>
 
         <div class="bg-gray-800 p-6 rounded-2xl shadow-lg text-center">
           <h4 class="text-xl font-bold text-yellow-300">Donatien Badibanga Ntumba</h4>
@@ -124,6 +124,7 @@ $resultJobApplications = $conn->query("SELECT * FROM applications ORDER BY submi
 
       </div>
       <div class="right">
+        <br>
 
         <h4><i>Arche de Dieu</i></h4>
 

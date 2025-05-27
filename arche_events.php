@@ -32,14 +32,19 @@ if (isset($_GET['delete'])) {
 $stmtp = $pdo->query("SELECT * FROM pastors ORDER BY first_name");
 $pastors = $stmtp->fetchAll();
 
+// Get all Events 
+$sql = "SELECT * FROM events
+        ORDER BY event_date ASC, time ASC";
 
+$stm = $pdo->query($sql);
+$all_events = $stm->fetchAll();
 
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head> <!-- Begin of Head -->
   <meta charset="UTF-8" />
-  <title>Administration</title>
+  <title>Evenements de l'Arche de Dieu</title>
 
   <!-------------------------Link to external CSS----------->
   <link rel="stylesheet" href="css/style.css">
@@ -86,32 +91,31 @@ $pastors = $stmtp->fetchAll();
 
 
 
-<h4>Membres de l'eglise Arche de Dieu</h4><br>
+<h4>Evenements de l'Arche de Dieu</h4><br>
 
-<a href="arche_add_member.php">➕ Ajout d'un Membre</a><br><br>
+<a href="arche_create_event.php">➕ Ajout d'un Evenement</a><br><br> 
 
 <table border="1" cellpadding="6" cellspacing="0">
     <tr>
-        <th><small>Prenom</small></th>
-        <th><small>Nom</small></th>
-        <th><small>Tel</small></th>
-        <th><small>Courriel</small></th>
-        <th><small>Adresse</small></th>
-        <th>Actions</th>
+        <th><small>Evenements</small></th>
+        <th><small>Description</small></th>
+        <th><small>Date</small></th>
+        <th><small>Heure</small></th>
+        <th><small>Lieu</small></th>
+        <th><small>Organisat(rice)eur</small></th>
     </tr>
-    <?php foreach ($members as $m): ?>
+
+    <?php foreach ($all_events as $ae): ?>
         <tr>
-            <td><?= htmlspecialchars($m['first_name']) ?></td>
-            <td><?= htmlspecialchars($m['last_name']) ?></td>
-            <td><?= $m['phone_number'] ?></td>
-            <td><?= $m['email'] ?></td>
-            <td><?= nl2br(htmlspecialchars($m['address'])) ?></td>
-            <td>
-                <a href="arche_edit_member.php?id=<?= $m['id'] ?>">✏️ Modifier</a> |
-                <a href="?delete=<?= $m['id'] ?>" onclick="return confirm('Effacer ce membre?')">🗑️ Effacer</a>
-            </td>
+            <td><?= htmlspecialchars($ae['name']) ?></td>
+            <td><?= htmlspecialchars($ae['description']) ?></td>
+            <td><?= $ae['event_date'] ?></td>
+            <td><?= $ae['time'] ?></td>
+            <td><?= $ae['location'] ?></td>
+            <td><?= $ae['organizer'] ?></td>
         </tr>
     <?php endforeach; ?>
+    
 </table><br>
 
 </main> <!-- End of main -->
@@ -135,3 +139,7 @@ $pastors = $stmtp->fetchAll();
 
 </body>
 </html>
+
+
+
+

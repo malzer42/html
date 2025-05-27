@@ -1,13 +1,15 @@
-
 <?php
 
-session_start();
-if (!isset($_SESSION['admin_logged_in']) || !isset($_SESSION['dashboard_access'])  ) {
-    header('Location: arche_board_login.php');
-    exit;
-}
-
+session_destroy();
 require 'db_arche.php';
+require 'arche_finance_admins_protect.php';
+
+/* if (isset($_SESSION['admin_logged_in']) ) {
+    header('Location: arche_finance_admins_login.php');
+    exit;
+} 
+ */
+
 
 $start_date = $_GET['start_date'] ?? '';
 $end_date = $_GET['end_date'] ?? '';

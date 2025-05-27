@@ -8,13 +8,18 @@ require 'arche_admins_protect.php';
     exit;
 }
  */
-// Delete member
+// Delete ministry
 if (isset($_GET['delete'])) {
-    $id_member = $_GET['delete'];
-    $pdo->prepare("DELETE FROM members WHERE id = ?")->execute([$id_member]);
-    header("Location: arche_gestion_membre.php");
+    $id_ministry = $_GET['delete'];
+    $pdo->prepare("DELETE FROM minitries WHERE id = ?")->execute([$id_member]);
+    header("Location: arche_ministeres.php");
     exit;
 }
+
+// Fetch all ministries
+$stmt = $pdo->query("SELECT * FROM minitries ORDER BY name");
+$ministry = $stmt->fetchAll();
+
 
 // Fetch all members
 $stmt = $pdo->query("SELECT * FROM members ORDER BY first_name");
@@ -32,6 +37,14 @@ if (isset($_GET['delete'])) {
 $stmtp = $pdo->query("SELECT * FROM pastors ORDER BY first_name");
 $pastors = $stmtp->fetchAll();
 
+// Get all ministries with their leader information
+$sql = "SELECT name, description,  first_name, phone_number, email
+        FROM minitries 
+        JOIN members WHERE leader_id = members.id";
+
+
+$stmt = $pdo->query($sql);
+$ministries = $stmt->fetchAll();
 
 
 ?>
@@ -39,7 +52,7 @@ $pastors = $stmtp->fetchAll();
 <html lang="fr">
 <head> <!-- Begin of Head -->
   <meta charset="UTF-8" />
-  <title>Administration</title>
+  <title>Ministeres Arche de Dieu</title>
 
   <!-------------------------Link to external CSS----------->
   <link rel="stylesheet" href="css/style.css">
@@ -86,32 +99,30 @@ $pastors = $stmtp->fetchAll();
 
 
 
-<h4>Membres de l'eglise Arche de Dieu</h4><br>
+<h4>Ministeres de l'Arche de Dieu</h4><br>
 
-<a href="arche_add_member.php">➕ Ajout d'un Membre</a><br><br>
+<a href="arche_create_ministry.php">➕ Ajout d'un Ministere</a><br><br>
 
 <table border="1" cellpadding="6" cellspacing="0">
     <tr>
-        <th><small>Prenom</small></th>
-        <th><small>Nom</small></th>
+        <th><small>Ministere</small></th>
+        <th><small>Description</small></th>
+        <th><small>Responsable</small></th>
         <th><small>Tel</small></th>
         <th><small>Courriel</small></th>
-        <th><small>Adresse</small></th>
-        <th>Actions</th>
     </tr>
-    <?php foreach ($members as $m): ?>
+    <?php foreach ($ministries as $m): ?>
         <tr>
-            <td><?= htmlspecialchars($m['first_name']) ?></td>
-            <td><?= htmlspecialchars($m['last_name']) ?></td>
+            <td><?= htmlspecialchars($m['name']) ?></td>
+            <td><?= htmlspecialchars($m['description']) ?></td>
+            <td><?= $m['first_name'] ?></td>
             <td><?= $m['phone_number'] ?></td>
             <td><?= $m['email'] ?></td>
-            <td><?= nl2br(htmlspecialchars($m['address'])) ?></td>
-            <td>
-                <a href="arche_edit_member.php?id=<?= $m['id'] ?>">✏️ Modifier</a> |
-                <a href="?delete=<?= $m['id'] ?>" onclick="return confirm('Effacer ce membre?')">🗑️ Effacer</a>
-            </td>
+            
         </tr>
     <?php endforeach; ?>
+
+    
 </table><br>
 
 </main> <!-- End of main -->

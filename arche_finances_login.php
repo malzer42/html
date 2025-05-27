@@ -35,14 +35,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (password_verify($password, $admin["password"])) {
             $_SESSION["admin_logged_in"] = true;
             $_SESSION['dashboard_access'] = true;
-            header('Location: arche_board.php');
+            header('Location: arche_finances.php');
             //header("Location: view_pickups.php");
             exit;
         } else {
-            $error = "Invalid password.";
+            $error = "Mot de passe invalide";
         }
     } else {
-        $error = "User not found.";
+        $error = "Administrateur non trouve.";
     }
 }
 ?>
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <head> <!-- Begin of Head -->
     <meta charset="UTF-8" />
-    <title>Gestion Arche de Dieu </title>
+    <title>Acces Finances Arche de Dieu </title>
     
     <!-------------------------Link to external CSS----------->
     <link rel="stylesheet" href="css/style.css">
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
   <div id="arche_footer"></div>
   <br>
-  <h3>Administrateur de l'Arche de Dieu </h3><br>
+  <h3>Administrateur de Finances de l'Arche de Dieu </h3><br>
   <?php if ($error): ?><p style="color:red;"><?= $error ?></p><?php endif; ?>
 
   <div class="form-group"> <!-- Application form -->

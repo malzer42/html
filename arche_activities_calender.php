@@ -32,6 +32,16 @@ if (isset($_GET['delete'])) {
 $stmtp = $pdo->query("SELECT * FROM pastors ORDER BY first_name");
 $pastors = $stmtp->fetchAll();
 
+// Get all activities with the members associated
+$sql = "SELECT title, description, activity_date, time, location, first_name, last_name
+        FROM calendar_activities
+        JOIN members where member_id = members.id
+        ORDER BY activity_date ASC, time ASC
+        ";
+
+$stm = $pdo->query($sql);
+$activities = $stm->fetchAll();
+
 
 
 ?>
@@ -39,7 +49,7 @@ $pastors = $stmtp->fetchAll();
 <html lang="fr">
 <head> <!-- Begin of Head -->
   <meta charset="UTF-8" />
-  <title>Administration</title>
+  <title>Calendrier Activites Arche de Dieu</title>
 
   <!-------------------------Link to external CSS----------->
   <link rel="stylesheet" href="css/style.css">
@@ -86,32 +96,33 @@ $pastors = $stmtp->fetchAll();
 
 
 
-<h4>Membres de l'eglise Arche de Dieu</h4><br>
+<h4>Calendrier des activites de l'Arche de Dieu</h4><br>
 
-<a href="arche_add_member.php">➕ Ajout d'un Membre</a><br><br>
+<a href="arche_create_activity.php">➕ Ajout d'une Activité</a><br><br>
 
 <table border="1" cellpadding="6" cellspacing="0">
     <tr>
+        <th><small>Titre</small></th>
+        <th><small>Description</small></th>
+        <th><small>Date</small></th>
+        <th><small>Heure</small></th>
+        <th><small>Lieu</small></th>
         <th><small>Prenom</small></th>
         <th><small>Nom</small></th>
-        <th><small>Tel</small></th>
-        <th><small>Courriel</small></th>
-        <th><small>Adresse</small></th>
-        <th>Actions</th>
     </tr>
-    <?php foreach ($members as $m): ?>
+
+    <?php foreach ($activities as $a): ?>
         <tr>
-            <td><?= htmlspecialchars($m['first_name']) ?></td>
-            <td><?= htmlspecialchars($m['last_name']) ?></td>
-            <td><?= $m['phone_number'] ?></td>
-            <td><?= $m['email'] ?></td>
-            <td><?= nl2br(htmlspecialchars($m['address'])) ?></td>
-            <td>
-                <a href="arche_edit_member.php?id=<?= $m['id'] ?>">✏️ Modifier</a> |
-                <a href="?delete=<?= $m['id'] ?>" onclick="return confirm('Effacer ce membre?')">🗑️ Effacer</a>
-            </td>
+            <td><?= htmlspecialchars($a['title']) ?></td>
+            <td><?= htmlspecialchars($a['description']) ?></td>
+            <td><?= $a['activity_date'] ?></td>
+            <td><?= $a['time'] ?></td>
+            <td><?= $a['location'] ?></td>
+            <td><?= $a['first_name'] ?></td>
+            <td><?= $a['last_name'] ?></td>
         </tr>
     <?php endforeach; ?>
+    
 </table><br>
 
 </main> <!-- End of main -->
@@ -135,3 +146,8 @@ $pastors = $stmtp->fetchAll();
 
 </body>
 </html>
+
+
+
+
+
