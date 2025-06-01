@@ -7,8 +7,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone_number = trim($_POST['phone_number']);
     $email = trim($_POST['member_email']);
     $address = trim($_POST['address']);
+    $pastor_first_name = trim($_POST['pastor_first_name']);
+    $category = trim($_POST['category']);
+    $ministry = trim($_POST['ministry']);
+
+
+    $stmtp = $pdo->prepare("SELECT id FROM pastors WHERE first_name = :first_name");
+    $stmtp->execute(['first_name' => $pastor_first_name]);
+    $pastor = $stmtp->fetch(PDO::FETCH_ASSOC);
+    var_dump($pastor);
+    $pastor_id = $pastor['id'];
+
     $pastor_id = trim($_POST['pastor_first_name']);
-    // $pastor_first_name = trim($_POST['pastor_first_name']);
+    $pastor_first_name = trim($_POST['pastor_first_name']);
 
     /* $stmtp = $pdo->prepare("SELECT id FROM pastors WHERE first_name = :first_name");
     $stmtp->execute(['first_name' => $pastor_first_name]);
@@ -26,10 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Veuillez choisir un pasteur valide");
     }
 
-    $stmt = $pdo->prepare("INSERT INTO members (first_name, last_name, phone_number, email, address, pastor_id) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$first_name, $last_name, $phone_number, $email, $address, $pastor_id]);
+    $stmt = $pdo->prepare("INSERT INTO members (first_name, last_name, phone_number, email, address, category, ministry, pastor_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$first_name, $last_name, $phone_number, $email, $address, $category, $ministry, $pastor_id]);
 
-    header("Location: create_member.html?success=1");
+    header("Location: arche_add_member.php?success=1");
     exit;
 }
 ?>

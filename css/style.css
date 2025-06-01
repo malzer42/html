@@ -127,12 +127,12 @@ select {
 .navbar {
     display: flex;
     justify-content: start;
-    align-items: left;
+    /* align-items: left; */
     background-color: black;
     padding: 0.5rem 1rem;
     color: red;
     width: 100px; 
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 .navbar a {

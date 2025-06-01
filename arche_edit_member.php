@@ -1,32 +1,28 @@
 <?php
 session_start();
 require 'db_arche.php';
+$cell_pastor = $pdo->query("SELECT * FROM pastors  ORDER BY first_name")->fetchAll();
 
 /* if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'main_pastor') {
     header("Location: login.php");
     exit;
 } */
 
-$id = $_GET['id'] ?? null;
-if (!$id) exit('Invalid ID.');
+if (!isset($_GET['id'])) {
+    die('ID de membre fournie');
+}
+
+$id = $_GET['id'];
 
 $stmt = $pdo->prepare("SELECT * FROM members WHERE id = ?");
 $stmt->execute([$id]);
 $member = $stmt->fetch();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $phone_number = $_POST['phone_number'];
-    $email = $_POST['email'];
-    $address = $_POST['address'];
+if (!$member) {
 
-    $pdo->prepare("UPDATE members SET first_name = ?, last_name = ?, phone_number = ?,  email = ?, address = ? WHERE id = ?")
-        ->execute([$first_name, $last_name, $phone_number,  $email, $address, $id]);
-
-    header("Location: arche_gestion_membre.php?success=1");
-    exit;
+    die('Membre non existant');
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -91,18 +87,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <main> <!-- Beginning of Main -->
 
-    <h1>Gestion de l'eglise Arche de Dieu</h1>
 
     <div class="container">
       <div class="left">
 
-
+<br>
 <h4>Modification des informations du membre</h4>
+<br>
 
 <div class="form-group"> <!-- Application form -->
           
-          <form method="POST" action="create_member.php">
+          <form method="POST" action="arche_update_member.php">
+
             <table>
+              <tr>
+                <td>
+                  <input type="hidden" name="id" value="<?= htmlspecialchars($member['id']) ?>">
+                </td>
+              </tr>
 
               <tr>
                 <td>
@@ -148,6 +150,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </td>
               </tr>
 
+              <tr>
+                <td>
+                  <label for="pastor_first_name">Pasteur: </label>
+                </td>
+                <td>
+                  <select name="pastor_first_name" id="pastor_first_name" style="width: 300px; height: 50px; font-size: 16px;"  required>
+                    <option value="">-- Choisir le pasteur de la cellule --</option>
+                      <?php foreach ($cell_pastor as $cp): ?>
+                            <option value="<?= $cp['id'] ?>">
+                            <?= htmlspecialchars( $cp['first_name'] )?> - <?= htmlspecialchars($cp['last_name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="category">Categorie: </label>
+                </td>
+                <td>
+                  <select name="category" id="category" style="width: 300px; height: 50px; font-size: 16px;">
+                    <option value="">       --Choisir une Categorie--</option>
+                    <option value="Homme" <?= $member['category'] == 'Homme' ? 'selected' : '' ?>>Homme</option>
+                    <option value="Dame" <?= $member['category'] == 'Dame' ? 'selected' : '' ?>>Dame</option>
+                    <option value="Jeunesse" <?= $member['category'] == 'Jeunesse' ? 'selected' : '' ?>>Jeunesse</option>
+                    <option value="Ecodim" <?= $member['category'] == 'Ecodim' ? 'selected' : '' ?>>Ecodim</option>
+                    <option value="Visiteur" <?= $member['category'] == 'Visiteur' ? 'selected' : '' ?>>Visiteur</option>
+                    
+
+                  </select>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td>
+                  <label for="ministry">Ministere: </label>
+                </td>
+                <td>
+                  <select name="ministry" id="ministry" style="width: 300px; height: 50px; font-size: 16px;">
+                    <option value="">       --Choisir un Ministere--</option>
+                    <option value="Hommes" <?= $member['ministry'] == 'Hommes' ? 'selected' : '' ?>>Hommes</option>
+                    <option value="Femmes" <?= $member['ministry'] == 'Femmes' ? 'selected' : '' ?>>Femmes</option>
+                    <option value="Jeunes" <?= $member['ministry'] == 'Jeunes' ? 'selected' : '' ?>>Jeunes</option>
+                    <option value="Enfants" <?= $member['ministry'] == 'Enfants' ? 'selected' : '' ?>>Enfants</option>
+                    <option value="Autres" <?= $member['ministry'] == 'Autres' ? 'selected' : '' ?>>Autres</option>
+                  </select>
+                </td>
+              </tr>
+
+
+
               <td>
               <td>
                 <div class="cf-turnstile" data-sitekey="0x4AAAAAABT_sdEEEltXHkt4"></div>
@@ -175,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('success') === '1') {
-          alert("Ajout du Membre reussie!");
+          alert("Modification du Membre reussie!");
         }
       </script>
 

@@ -29,6 +29,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['member_email']);
     $address = trim($_POST['address']);
     $pastor_first_name = trim($_POST['pastor_first_name']);
+    $category = trim($_POST['category']);
+    $ministry = trim($_POST['ministry']);
+
 
     $stmtp = $pdo->prepare("SELECT id FROM pastors WHERE first_name = :first_name");
     $stmtp->execute(['first_name' => $pastor_first_name]);
@@ -39,8 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Veuillez choisir un pasteur valide");
     }
 
-    $stmt = $pdo->prepare("INSERT INTO members (first_name, last_name, phone_number, email, address, pastor_id) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$first_name, $last_name, $phone_number, $email, $address, $pastor_id]);
+    $stmt = $pdo->prepare("INSERT INTO members (first_name, last_name, phone_number, email, address, pastor_id, category, ministry) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$first_name, $last_name, $phone_number, $email, $address, $pastor_id, $category, $ministry]);
 
     header("Location: arche_gestion_membre.php?success=1");
     exit;
@@ -114,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="left">
 
 <br><br>
-<h4>Ajout d'un nouveau Membre</h4><br><br>
+<h4>Ajout d'un Membre</h4><br><br>
 
 <div class="form-group"> <!-- Application form -->
           
@@ -165,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <textarea name="address" id="address" rows="4" placeholder="8621 Boulevard Saint-Laurent
 
 Montréal, QC , CA H2P 2M9"
-                    style="width: 295px; height: 50px; font-size: 10px;" required></textarea>
+                    style="width: 295px; height: 50px; font-size: 14px;" required></textarea>
                 </td>
               </tr>
 
@@ -185,6 +188,42 @@ Montréal, QC , CA H2P 2M9"
                   </select>
                 </td>
               </tr>
+
+
+              <tr>
+                <td>
+                  <label for="category">Categorie: </label>
+                </td>
+                <td>
+                  <select name="category" id="category" style="width: 300px; height: 50px; font-size: 16px;">
+                    <option value="">       --Choisir une Categorie--</option>
+                    <option value="Homme">Homme</option>
+                    <option value="Dame">Dame</option>
+                    <option value="Jeunesse">Jeunesse</option>
+                    <option value="Ecodim">Ecodim</option>
+                    <option value="Visiteur">Visiteur</option>
+
+                  </select>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td>
+                  <label for="ministry">Ministere: </label>
+                </td>
+                <td>
+                  <select name="ministry" id="ministry" style="width: 300px; height: 50px; font-size: 16px;">
+                    <option value="">       --Choisir un Ministere--</option>
+                    <option value="Hommes">Hommes</option>
+                    <option value="Femmes">Femmes</option>
+                    <option value="Jeunes">Jeunes</option>
+                    <option value="Enfants">Enfants</option>
+                    <option value="Autres">Autres</option>
+                  </select>
+                </td>
+              </tr>
+
 
                <td>
               <td>

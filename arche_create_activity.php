@@ -1,6 +1,6 @@
 <?php
 require 'db_arche.php';
-$cell_pastor = $pdo->query("SELECT * FROM pastors  ORDER BY first_name")->fetchAll();
+// $cell_pastor = $pdo->query("SELECT * FROM pastors  ORDER BY first_name")->fetchAll();
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <head> <!-- Begin of Head -->
   <meta charset="UTF-8" />
-  <title>Creer une Activité</title>
+  <title>Créer une Activité</title>
 
   <!-------------------------Link to external CSS----------->
   <link rel="stylesheet" href="css/style.css">
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <table>
                 <tr>
                     <td>
-                        <label for="titel">Titre: </label>
+                        <label for="title">Titre: </label>
                     </td>
                     <td>
                         <input type="text" name="title" placeholder="Titre" required>

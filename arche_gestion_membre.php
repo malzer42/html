@@ -16,6 +16,7 @@ if (isset($_GET['delete'])) {
     exit;
 }
 
+
 // Fetch all members
 $stmt = $pdo->query("SELECT * FROM members ORDER BY first_name");
 $members = $stmt->fetchAll();
@@ -97,18 +98,22 @@ $pastors = $stmtp->fetchAll();
         <th><small>Tel</small></th>
         <th><small>Courriel</small></th>
         <th><small>Adresse</small></th>
-        <th>Actions</th>
+        <th><small>Categorie</small></th>
+        <th><small>Ministere</small></th>
+        <th><small>Actions</small></th>
     </tr>
     <?php foreach ($members as $m): ?>
         <tr>
-            <td><?= htmlspecialchars($m['first_name']) ?></td>
-            <td><?= htmlspecialchars($m['last_name']) ?></td>
-            <td><?= $m['phone_number'] ?></td>
-            <td><?= $m['email'] ?></td>
-            <td><?= nl2br(htmlspecialchars($m['address'])) ?></td>
-            <td>
-                <a href="arche_edit_member.php?id=<?= $m['id'] ?>">✏️ Modifier</a> |
-                <a href="?delete=<?= $m['id'] ?>" onclick="return confirm('Effacer ce membre?')">🗑️ Effacer</a>
+            <td><small><?= htmlspecialchars($m['first_name']) ?></small></td>
+            <td><small><?= htmlspecialchars($m['last_name']) ?></small></td>
+            <td><small><?= $m['phone_number'] ?></small></td>
+            <td><small><?= $m['email'] ?></small></td>
+            <td><small><?= nl2br(htmlspecialchars($m['address'])) ?></small></td>
+            <td><small><?= htmlspecialchars($m['category']) ?></small></td>
+            <td><small><?= htmlspecialchars($m['ministry']) ?></small></td>
+            <td><small>
+                <a href="arche_edit_member.php?id=<?= $m['id'] ?>" target="_blank">✏️ Modifier</a> |
+                <a href="?delete=<?= $m['id'] ?>" onclick="return confirm('Effacer ce membre?')">🗑️ Effacer</a></small>
             </td>
         </tr>
     <?php endforeach; ?>

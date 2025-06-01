@@ -8,32 +8,21 @@ require 'arche_admins_protect.php';
     exit;
 }
  */
-// Delete member
+// Delete an activity
 if (isset($_GET['delete'])) {
-    $id_member = $_GET['delete'];
-    $pdo->prepare("DELETE FROM members WHERE id = ?")->execute([$id_member]);
-    header("Location: arche_gestion_membre.php");
+    $id_activity = $_GET['delete'];
+    $pdo->prepare("DELETE FROM calendar_activities WHERE id = ?")->execute([$id_activity]);
+    header("Location: arche_activities_calender.php");
     exit;
 }
+
 
 // Fetch all members
 $stmt = $pdo->query("SELECT * FROM members ORDER BY first_name");
 $members = $stmt->fetchAll();
 
-// Delete Pastors
-if (isset($_GET['delete'])) {
-    $id_pastor = $_GET['delete'];
-    $pdo->prepare("DELETE FROM pastors WHERE id = ?")->execute([$id_pastor]);
-    header("Location: arche_gestion_membre.php");
-    exit;
-}
-
-// Fetch all pastors
-$stmtp = $pdo->query("SELECT * FROM pastors ORDER BY first_name");
-$pastors = $stmtp->fetchAll();
-
 // Get all activities with the members associated
-$sql = "SELECT title, description, activity_date, time, location, first_name, last_name
+$sql = "SELECT calendar_activities.id, title, description, activity_date, time, location, first_name, last_name
         FROM calendar_activities
         JOIN members where member_id = members.id
         ORDER BY activity_date ASC, time ASC
@@ -109,17 +98,22 @@ $activities = $stm->fetchAll();
         <th><small>Lieu</small></th>
         <th><small>Prenom</small></th>
         <th><small>Nom</small></th>
+        <th><small>Actions</small></th>
     </tr>
 
-    <?php foreach ($activities as $a): ?>
+    <?php foreach ($activities as $ac): ?>
         <tr>
-            <td><?= htmlspecialchars($a['title']) ?></td>
-            <td><?= htmlspecialchars($a['description']) ?></td>
-            <td><?= $a['activity_date'] ?></td>
-            <td><?= $a['time'] ?></td>
-            <td><?= $a['location'] ?></td>
-            <td><?= $a['first_name'] ?></td>
-            <td><?= $a['last_name'] ?></td>
+            <td><small><?= htmlspecialchars($ac['title']) ?></small></td>
+            <td><small><?= htmlspecialchars($ac['description']) ?></small></td>
+            <td><small><?= $ac['activity_date'] ?></small></td>
+            <td><small><?= $ac['time'] ?></small></td>
+            <td><small><?= $ac['location'] ?></small></td>
+            <td><small><?= $ac['first_name'] ?></small></td>
+            <td><small><?= $ac['last_name'] ?></small></td>
+            <td><small>
+                <a href="arche_edit_activity.php?id=<?= $ac['id'] ?>" target="_blank">✏️ Modifier</a> |
+                <a href="?delete=<?= $ac['id'] ?>" onclick="return confirm('Effacer?')">🗑️ Effacer</a></small>
+            </td>
         </tr>
     <?php endforeach; ?>
     

@@ -1,20 +1,14 @@
 <?php
 require 'db_arche.php';
+$arche_member = $pdo->query("SELECT * FROM members  ORDER BY first_name")->fetchAll();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $description = $_POST['description'];
-    $first_name = trim($_POST['first_name']);
-    $last_name = trim($_POST['last_name']);
-
+    $leader_id = intval($_POST['leader_id']); // Get member id directly
     
-    $stmtp = $pdo->prepare("SELECT id FROM members WHERE first_name = :first_name AND last_name = :last_name");
-    $stmtp->execute([
-    ':first_name' => $first_name,
-    ':last_name' => $last_name
-    ]);
-    $member = $stmtp->fetch(PDO::FETCH_ASSOC);
-    $leader_id = $member['id'];
+
+    var_dump($leader_id);
 
 
 
@@ -123,22 +117,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </tr>
 
                 <tr>
-                    <td>
-                        <label for="first_name">Prenom: </label>
-                    </td>
-                    <td>
-                        <input type="text" name="first_name" placeholder="Prenom du responsable" required>
-                    </td>
-                </tr>
+                <td>
+                  <label for="leader_id">Responsable: </label>
+                </td>
+                <td>
+                  <select name="leader_id" id="leader_id" style="width: 300px; height: 50px; font-size: 16px;"  required>
+                    <option value="">-- Choisir le Responsable du Ministere --</option>
+                      <?php foreach ($arche_member as $am): ?>
+                            <option value="<?= $am['id'] ?>">
+                            <?= $am['first_name'] ?> - <?= $am['last_name'] ?>
+                            </option>
+                        <?php endforeach; ?>
 
-                <tr>
-                    <td>
-                        <label for="last_name">Nom: </label>
-                    </td>
-                    <td>
-                        <input type="text" name="last_name" placeholder="Nom du responsable" required>
-                    </td>
-                </tr>
+                  </select>
+                </td>
+              </tr>
+
+
 
                 <td>
                     <td>

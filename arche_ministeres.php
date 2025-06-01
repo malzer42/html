@@ -11,7 +11,7 @@ require 'arche_admins_protect.php';
 // Delete ministry
 if (isset($_GET['delete'])) {
     $id_ministry = $_GET['delete'];
-    $pdo->prepare("DELETE FROM minitries WHERE id = ?")->execute([$id_member]);
+    $pdo->prepare("DELETE FROM minitries WHERE id = ?")->execute([$id_ministry]);
     header("Location: arche_ministeres.php");
     exit;
 }
@@ -38,7 +38,7 @@ $stmtp = $pdo->query("SELECT * FROM pastors ORDER BY first_name");
 $pastors = $stmtp->fetchAll();
 
 // Get all ministries with their leader information
-$sql = "SELECT name, description,  first_name, phone_number, email
+$sql = "SELECT minitries.id, name, description,  first_name, last_name, phone_number, email
         FROM minitries 
         JOIN members WHERE leader_id = members.id";
 
@@ -110,14 +110,19 @@ $ministries = $stmt->fetchAll();
         <th><small>Responsable</small></th>
         <th><small>Tel</small></th>
         <th><small>Courriel</small></th>
+        <th><small>Actions</small></th>
     </tr>
     <?php foreach ($ministries as $m): ?>
         <tr>
-            <td><?= htmlspecialchars($m['name']) ?></td>
-            <td><?= htmlspecialchars($m['description']) ?></td>
-            <td><?= $m['first_name'] ?></td>
-            <td><?= $m['phone_number'] ?></td>
-            <td><?= $m['email'] ?></td>
+            <td style="font-style: italic"><small><?= htmlspecialchars($m['name']) ?></small></td>
+            <td style="font-style: italic ; font-size: 16px;"><small><?= htmlspecialchars($m['description']) ?></small></td>
+            <td style="font-style: italic ;"><small><?= $m['first_name'] ?> - <?= $m['last_name'] ?></small></td>
+            <td style="font-style: italic ; font-size: 16px;"><small><?= $m['phone_number'] ?></small></td>
+            <td style="font-style: italic"><small><?= $m['email'] ?></small></td>
+             <td><small>
+                <!-- <a href="arche_edit_activity.php?id=<?= $ac['id'] ?>" target="_blank">✏️ Modifier</a> | -->
+                <a href="?delete=<?= $m['id'] ?>" onclick="return confirm('Effacer?')">🗑️</a></small>
+            </td>
             
         </tr>
     <?php endforeach; ?>

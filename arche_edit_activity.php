@@ -1,36 +1,37 @@
 <?php
 session_start();
 require 'db_arche.php';
+$cell_pastor = $pdo->query("SELECT * FROM pastors  ORDER BY first_name")->fetchAll();
 
 /* if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'main_pastor') {
     header("Location: login.php");
     exit;
 } */
 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $phone_number = $_POST['phone_number'];
-    $email = $_POST['pastor_email'];
-    $address = $_POST['address'];
-    $role = $_POST['role'];
-    // $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-    $stmt = $pdo->prepare("INSERT INTO pastors (first_name, last_name, phone_number, email, address, role) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$first_name, $last_name, $phone_number,  $email, $address,  $role]);
-
-
-    header("Location: arche_gestion_membre.php?success=1");
-    exit;
+if (!isset($_GET['id'])) {
+    die('ID activité fournie');
 }
+
+$id = $_GET['id'];
+
+
+$stmt = $pdo->prepare("SELECT * FROM calendar_activities WHERE id = ?");
+$stmt->execute([$id]);
+$activity = $stmt->fetch();
+
+if (!$activity) {
+
+    die('Activité non existante');
+}
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head> <!-- Begin of Head -->
   <meta charset="UTF-8" />
-  <title>Pasteur</title>
+  <title>Edit of members</title>
 
   <!-------------------------Link to external CSS----------->
   <link rel="stylesheet" href="css/style.css">
@@ -91,78 +92,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
       <div class="left">
 
-<br><br>
-
-<h4>Ajout d'un nouveau Pasteur</h4><br><br>
+<br>
+<h4>Modification des informations d'une activité</h4>
+<br>
 
 <div class="form-group"> <!-- Application form -->
           
-          <form method="POST" action="create_pastor.php">
+          <form method="POST" action="arche_update_activity.php">
+
             <table>
-
-
               <tr>
                 <td>
-                  <label for="first_name">Prenom: </label>
-                </td>
-                <td>
-                  <input type="text" name="first_name" placeholder="Prenom" required>
+                  <input type="hidden" name="id" value="<?= htmlspecialchars($activity['id']) ?>">
                 </td>
               </tr>
 
               <tr>
                 <td>
-                  <label for="last_name">Nom: </label>
+                  <label for="title">Titre: </label>
                 </td>
                 <td>
-                  <input type="text" name="last_name" placeholder="Nom" required>
+                    <input type="text" name="title" value="<?= htmlspecialchars($activity['title']) ?>" required>
                 </td>
               </tr>
 
               <tr>
                 <td>
-                  <label for="phone">Phone: </label>
+                  <label for="description">Description: </label>
                 </td>
                 <td>
-                  <input type="tel" name="phone_number" pattern="^\+?[0-9\s\-\(\)]{7,15}$"
-                    placeholder="+1 (514) 271-7788" required>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td>
-                  <label for="email">Courriel: </label>
-                </td>
-                <td>
-                  <input type="email" name="pastor_email" placeholder="elarchededieu@gmail.com" required>
+                    <input type="text" name="description" value="<?= htmlspecialchars($activity['description']) ?>" required>
                 </td>
               </tr>
 
               <tr>
                 <td>
-                  <label for="address">Adresse:</label>
+                  <label for="date">Date: </label>
                 </td>
                 <td>
-                  <textarea name="address" id="address" rows="4" placeholder="8621 Boulevard Saint-Laurent
-
-Montréal, QC , CA H2P 2M9" style="width: 295px; height: 50px; font-size: 14px;" required></textarea>
+                    <input type="date" name="activity_date" value="<?= $activity['activity_date'] ?>">
                 </td>
               </tr>
-
+              <tr>
+                <td>
+                  <label for="time">Heure: </label>
+                </td>
+                <td>
+                    <input type="time" name="time" value="<?= $activity['time'] ?>" required>
+                </td>
+              </tr>
 
               <tr>
                 <td>
-                  <label for="role">Role: </label>
+                  <label for="location">Lieu:</label>
                 </td>
                 <td>
-                  <select name="role" id="role" style="width: 300px; height: 50px; font-size: 16px;">
-                    <option value="">       --Choisir un role--</option>
-                    <option value="main">Principal</option>
-                    <option value="cell">Secondaire</option>
-                  </select>
+                    <input type="text" name="location" value="<?= $activity['location'] ?>" required>
                 </td>
               </tr>
+
+             
+
 
               <td>
               <td>
@@ -179,26 +169,21 @@ Montréal, QC , CA H2P 2M9" style="width: 295px; height: 50px; font-size: 14px;"
               </td>
 
 
-
             </table>
-
+  
           </form>
 
 
         </div>
 
-        <div class="right">
 
-        </div>
-      </div>
 
-      <script>
+<script>
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('success') === '1') {
-          alert("Ajout du pasteur reussie!");
+          alert("Modification du Membre reussie!");
         }
       </script>
-
 
 
   </main> <!-- End of main -->
@@ -217,10 +202,8 @@ Montréal, QC , CA H2P 2M9" style="width: 295px; height: 50px; font-size: 14px;"
       s0.parentNode.insertBefore(s1, s0);
     })();
   </script>
-
+  
   <!--End of Tawk.to Script-->
 
 </body>
-
 </html>
-

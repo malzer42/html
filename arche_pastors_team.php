@@ -91,21 +91,24 @@ $pastors = $stmtp->fetchAll();
     <tr>
         <th><small>Prenom</small></th>
         <th><small>Nom</small></th>
-        <th><small>Tel</small></th>
-        <th><small>Courriel</small></th>
-        <th><small>Adresse</small></th>
+        <!-- <th><small>Tel</small></th> -->
+        <!-- <th><small>Courriel</small></th> -->
+        <!-- <th><small>Adresse</small></th> -->
         <th>Actions</th>
     </tr>
     <?php foreach ($pastors as $p): ?>
         <tr>
-            <td><?= htmlspecialchars($p['first_name']) ?></td>
-            <td><?= htmlspecialchars($p['last_name']) ?></td>
-            <td><?= $p['phone_number'] ?></td>
-            <td><?= $p['email'] ?></td>
-            <td><?= nl2br(htmlspecialchars($p['address'])) ?></td>
-            <td>
+            <td><small>
+                <a href="arche_pastor_profile.php?id=<?= $p['id'] ?>">
+                <?= htmlspecialchars($p['first_name']) ?></a>
+            </small></td>
+            <td><small><?= htmlspecialchars($p['last_name']) ?></small></td>
+            <!-- <td><small><?= $p['phone_number'] ?></small></td> -->
+            <!-- <td><small><?= $p['email'] ?></small></td> -->
+            <!-- <td><small><?= nl2br(htmlspecialchars($p['address'])) ?></small></td> -->
+            <td><small>
                 <a href="arche_edit_pastor.php?id=<?= $p['id'] ?>">✏️ Modifier</a> |
-                <a href="?delete=<?= $p['id'] ?>" onclick="return confirm('Delete this pastor?')">🗑️ Effacer</a>
+                <a href="?delete=<?= $p['id'] ?>" onclick="return confirm('Delete this pastor?')">🗑️ Effacer</a></small>
             </td>
         </tr>
     <?php endforeach; ?>
