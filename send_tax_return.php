@@ -21,16 +21,20 @@ require('fpdf186/fpdf.php');
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial','B',16);
-$pdf->Cell(40,10,"Recu d'impots pour {$member['first_name']} {$member['last_name']}");
+$pdf->Cell(80,20,"Eglise l'Arche de Dieu");
+$pdf->SetFont('Arial','I',14);
+$pdf->Cell(40,20,"Recu d'impots pour {$member['first_name']} {$member['last_name']}");
 $pdf->Ln(20);
 $pdf->SetFont('Arial','',14);
 $pdf->Cell(40,10,"Total Donations: $" . number_format((float)($donation['total'] ?? 0), 2));
 $pdf->Image('signature.png', 50, 200, 40); // (x, y, width)
+$pdf->Image('signature.png', 110, 200, 40); // (x, y, width)
 
 // Optional: Label for signature
 $pdf->SetXY(50, 185);
 $pdf->SetFont('Arial', '', 10);
 $pdf->Cell(40, 10, 'Jean Claude Mutombo', 0, 0, 'C');
+$pdf->Cell(80, 10, 'Helene Ciabu', 0, 0, 'C');
 $pdf_path = "tax_returns/tax_{$member_id}.pdf";
 $pdf->Output('F', $pdf_path);
 

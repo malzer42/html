@@ -16,7 +16,7 @@ $end = $_GET['end_date'] ?? date('Y-12-31');
 $sql = "SELECT m.id, m.first_name, m.last_name, m.email, 
                COALESCE(SUM(d.amount), 0) AS total_donations
         FROM members m
-        LEFT JOIN donations d ON m.id = d.member_id 
+        INNER JOIN donations d ON m.id = d.member_id 
               AND d.donation_date BETWEEN ? AND ?
         GROUP BY m.id ORDER BY m.first_name" ;
 
@@ -73,9 +73,9 @@ $members = $stmt->fetchAll();
     <h4>Dimes, Offrancdes, et Dons des membres - Retour d'impots</h4><br>
 
     <form method="GET">
-        <label>Start Date: <input type="date" name="start_date" value="<?= htmlspecialchars($start) ?>"></label>
-        <label>End Date: <input type="date" name="end_date" value="<?= htmlspecialchars($end) ?>"></label>
-        <button type="submit">Filter</button>
+        <label>Date Debut: <input type="date" name="start_date" value="<?= htmlspecialchars($start) ?>"></label>
+        <label>Date Fin: <input type="date" name="end_date" value="<?= htmlspecialchars($end) ?>"></label>
+        <button type="submit">Filtre</button>
     </form>
     <br>
     <table border="1" cellpadding="8" cellspacing="0">

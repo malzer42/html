@@ -10,39 +10,22 @@ require 'arche_finance_admins_protect.php';
 } 
  */
 
+// Default date range
+$start = $_GET['start_date'] ?? date('Y-01-01');
+$end = $_GET['end_date'] ?? date('Y-12-31');
 
-$start_date = $_GET['start_date'] ?? '';
-$end_date = $_GET['end_date'] ?? '';
-$params = [];
-$where = '';
-
-if ($start_date && $end_date) {
-    $where = "WHERE d.date BETWEEN :start_date AND :end_date";
-    $params = [
-        ':start_date' => $start_date,
-        ':end_date' => $end_date
-    ];
-}
-
-/* $sql = "
-    SELECT m.first_name, m.last_name, SUM(d.amount) AS total_donations
-    FROM members m
-    LEFT JOIN donations d ON m.id = d.member_id
-    $where
-    GROUP BY m.id, m.first_name, m.last_name
-"; */
-
-
-$sql = "
-    SELECT m.first_name, m.last_name, d.amount, d.donation_date, d.note 
-    FROM members m
-    LEFT JOIN donations d ON m.id = d.member_id
-    ORDER BY d.donation_date DESC
-";
+// Get member donation totals
+$sql = "SELECT m.id, m.first_name, m.last_name, d.amount, d.donation_date, d.note
+        FROM members m
+        INNER JOIN donations d ON m.id = d.member_id 
+              AND d.donation_date BETWEEN ? AND ?
+              ORDER BY d.donation_date DESC, d.note ASC" ;
 
 $stmt = $pdo->prepare($sql);
-$stmt->execute($params);
+$stmt->execute([$start, $end]);
 $results = $stmt->fetchAll();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -94,6 +77,13 @@ $results = $stmt->fetchAll();
   <main> <!-- Beginning of Main -->
     <br>
     <h4>Dimes, Offrandes, Dons</h4>
+    <br>
+    <form method="GET">
+        <label>Date Debut: <input type="date" name="start_date" value="<?= htmlspecialchars($start) ?>"></label>
+        <label>Date Fin: <input type="date" name="end_date" value="<?= htmlspecialchars($end) ?>"></label>
+        <button type="submit">Filtre</button>
+    </form>
+    <br>
 
     <table>
         <tr>
@@ -112,20 +102,14 @@ $results = $stmt->fetchAll();
                     <td><small>$<?= number_format($row['amount'] ?? 0, 2) ?></small></td>
                     <td><small><?= htmlspecialchars($row['donation_date'] ?? '') ?></small></td>
                     <td><small><?= htmlspecialchars($row['note'] ?? '') ?></small></td>
+                    
                     <!-- <td><small>$<?= number_format($row['total_donations'] ?? 0, 2) ?></small></td> -->
+                
                 </tr>
             <?php endforeach; ?>
         </tbody>
     
     </table><br>
-
-   <!--  <h4>Gestion Interne </h4>
-    <div>
-        <a href="logout.php"><button type="submit" value="logout" style="width: 100px; height: 50px; font-size: 16px;">Logout</button></a>
-        
-        <a href="arche.html" target="_blank"><button type="submit" value="tawk" style="width: 100px; height: 50px; font-size: 16px;">Arche</button></a> 
-    </div>
- -->
 
 
 </main> <!-- End of main -->
